@@ -20,6 +20,7 @@ class PokeRepository {
     final pokemons = await fetchPokemons();
     final types = pokemons
         .expand((pokemon) => pokemon.types)
+        .distinctBy((e) => e.name)
         .toList(growable: false)
       ..sort((a, b) => a.name.toUpperCase().compareTo(b.name.toUpperCase()));
     return types;
