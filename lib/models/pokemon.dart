@@ -1,9 +1,9 @@
 import 'pokemon_type.dart';
 
 class Pokemon {
-  final int id;
-  final String name;
-  final String imageUrl;
+   int id;
+   String name;
+   String imageUrl;
   final List<PokemonType> types;
 
   Pokemon({
@@ -13,7 +13,9 @@ class Pokemon {
     required this.types,
   });
 
-  factory Pokemon.fromJson(Map<String, dynamic> json) {
+   bool isValid() => name.isNotEmpty && imageUrl.isNotEmpty && types.isNotEmpty;
+
+   factory Pokemon.fromJson(Map<String, dynamic> json) {
     final jsonTypesArray = json['apiTypes'] as List? ?? [];
     final types =
     jsonTypesArray.map((type) => PokemonType.fromJson(type)).toList();

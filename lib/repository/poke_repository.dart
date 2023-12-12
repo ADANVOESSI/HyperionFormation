@@ -26,23 +26,26 @@ class PokeRepository {
     return Future.value(_pokemonType);
   }
 
+  Future<void> addPokemon(Pokemon pokemon) async {
+    pokemon.id = (_pokemons?.length ?? 0) + 1;
+    _pokemons
+      ?..add(pokemon)
+      ..sort((first, second) => first.name.toLowerCase().compareTo(second.name.toLowerCase()));
+  }
+
+  Future<void> updatePokemon(Pokemon pokemon) async {
+    final index = _pokemons?.indexWhere((p) => p.id == pokemon.id);
+    if (index != null && index >= 0) {
+      _pokemons?[index] = pokemon;
+    }
+    _pokemons?.sort((first, second) => first.name.toLowerCase().compareTo(second.name.toLowerCase()));
+  }
+
   Future<void> deletePokemon(int index) async {
     if (_pokemons != null && index >= 0 && index < _pokemons!.length) {
       _pokemons!.removeAt(index);
     }
   }
-
-  Future<void> addPokemon(String name, String imageUrl, List<PokemonType> selectedTypes) async {
-    Pokemon newPokemon = Pokemon(
-      name: name,
-      imageUrl: imageUrl,
-      types: selectedTypes,
-      id: _pokemons!.length + 1,
-    );
-
-    _pokemons!.add(newPokemon);
-  }
-
 }
 
 PokeRepository pokeRepository = PokeRepository();

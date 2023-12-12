@@ -23,7 +23,7 @@ class _AddPokemonsState extends State<AddPokemons> {
 
   void _submitForm() {
     if (_name.isNotEmpty && _imageUrl.isNotEmpty && _selectedTypes.isNotEmpty) {
-      pokeRepository.addPokemon(_name, _imageUrl, _selectedTypes);
+      pokeRepository.addPokemon(pokemon as Pokemon);
       setState(() {
         _name = '';
         _imageUrl = '';

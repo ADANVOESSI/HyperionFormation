@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon/models/pokemon.dart';
+import 'package:pokemon/poke_routes.dart';
 import 'package:pokemon/poke_theme.dart';
 import 'package:pokemon/repository/poke_repository.dart';
+import 'package:pokemon/widgets/edit_pokemons.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -21,6 +23,27 @@ class _MyHomePageState extends State<MyHomePage> {
     _loadPokemons();
   }
 
+  void _editPokemon(BuildContext context, Pokemon? selectedPokemon) {
+    if (selectedPokemon != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EditPokemons(
+            initialPokemon: selectedPokemon, // Pass the selectedPokemon as initialPokemon
+            pokemon: selectedPokemon, // Assign the same selectedPokemon to the pokemon property
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Aucun Pokémon sélectionné'),
+        ),
+      );
+    }
+  }
+
+
   _loadPokemons() async {
     try {
       List<Pokemon> fetchedPokemons = await pokeRepository.fetchPokemons();
@@ -37,6 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     ThemeData selectedTheme = isLightTheme ? PokeTheme.themeLight : PokeTheme.themeDark;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: selectedTheme,
       home: Scaffold(
         appBar: AppBar(
@@ -61,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
               iconSize: 28,
               icon: const Icon(Icons.add),
               onPressed: () {
-                Navigator.of(context).pushNamed('/addPokemons');
+                pokeRoutes.go('/addPokemons');
               },
             ),
             Switch(
@@ -293,8 +317,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => {},
-              // _editPokemon(context, _selectedPokemon),
+          onPressed: () => _editPokemon(context, selectedPokemon),
           label: const Text('Edit'),
           icon: const Icon(Icons.edit),
         ),
