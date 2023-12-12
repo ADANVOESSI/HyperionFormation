@@ -91,70 +91,81 @@ class _AddPokemonsState extends State<AddPokemons> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final pokeRepository = PokeRepository();
   List<PokemonType> filters = [];
+  List<Pokemon> pokemon = [];
+
   List<PokemonType> _selectedTypes = [];
   String _name = '';
   String _imageUrl = '';
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      print('Nom: $_name');
-      print('Image URL: $_imageUrl');
-      print('Types sélectionnés: $_selectedTypes');
     }
   }
 
   @override
   void initState() {
     super.initState();
-    _loadPokemons();
+    _loadPokemonTypes();
   }
 
-  void _loadPokemons() async {
-    List<Pokemon> pokemons = await pokeRepository.fetchPokemons();
-    List<String> allTypes = [];
+  _loadPokemonTypes() async {
+    try {
+      List<Pokemon> fetchedPokemons = await pokeRepository.fetchPokemons();
 
-    pokemons.forEach((pokemon) {
-      pokemon.types.forEach((type) {
-        if (!allTypes.contains(type.name)) {
-          allTypes.add(type.name);
-        }
+      setState(() {
+        pokemon = fetchedPokemons;
       });
-    });
-
-    List<PokemonType> pokemonTypes = allTypes.map((typeName) {
-      switch (typeName) {
-        case 'Poison':
-          return PokemonType.Poison;
-        case 'Plante':
-          return PokemonType.Plante;
-        case 'Feu':
-          return PokemonType.Feu;
-        case 'Vol':
-          return PokemonType.Vol;
-        case 'Eau':
-          return PokemonType.Eau;
-        case 'Insecte':
-          return PokemonType.Insecte;
-        case 'Normal':
-          return PokemonType.Normal;
-        case 'Electrik':
-          return PokemonType.Electrik;
-        case 'Sol':
-          return PokemonType.Sol;
-        case 'Fee':
-          return PokemonType.Fee;
-        case 'poison':
-          return PokemonType.poison;
-        case 'fighting':
-          return PokemonType.fighting;
-        default:
-          return PokemonType.Normal;
-      }
-    }).toList();
-    setState(() {
-      _selectedTypes = pokemonTypes;
-    });
+    } catch (e) {
+      print('Erreur lors du chargement des Pokémon: $e');
+    }
   }
+
+  // void _loadPokemons() async {
+  //   List<Pokemon> pokemons = await pokeRepository.fetchPokemons();
+  //   List<String> allTypes = [];
+  //
+  //   pokemons.forEach((pokemon) {
+  //     pokemon.types.forEach((type) {
+  //       if (!allTypes.contains(type.name)) {
+  //         allTypes.add(type.name);
+  //       }
+  //     });
+  //   });
+  //
+  //   List<PokemonType> pokemonTypes = allTypes.map((typeName) {
+  //     switch (typeName) {
+  //       case 'Poison':
+  //         return PokemonType.Poison;
+  //       case 'Plante':
+  //         return PokemonType.Plante;
+  //       case 'Feu':
+  //         return PokemonType.Feu;
+  //       case 'Vol':
+  //         return PokemonType.Vol;
+  //       case 'Eau':
+  //         return PokemonType.Eau;
+  //       case 'Insecte':
+  //         return PokemonType.Insecte;
+  //       case 'Normal':
+  //         return PokemonType.Normal;
+  //       case 'Electrik':
+  //         return PokemonType.Electrik;
+  //       case 'Sol':
+  //         return PokemonType.Sol;
+  //       case 'Fee':
+  //         return PokemonType.Fee;
+  //       case 'poison':
+  //         return PokemonType.poison;
+  //       case 'fighting':
+  //         return PokemonType.fighting;
+  //       default:
+  //         return PokemonType.Normal;
+  //     }
+  //   }).toList();
+  //   setState(() {
+  //     _selectedTypes = pokemonTypes;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -236,6 +247,35 @@ class _AddPokemonsState extends State<AddPokemons> {
                                   },
                                 ),
                                 const SizedBox(height: 20),
+                                // Wrap(
+                                //   spacing: 5.0,
+                                //   children: pokemonTypes.map((PokemonType pokemonType) {
+                                //     return FilterChip(
+                                //       label: Row(
+                                //         children: [
+                                //           CircleAvatar(
+                                //             // Utilisez la propriété imageUrl pour l'avatar
+                                //             backgroundImage: NetworkImage(pokemonType.imageUrl),
+                                //           ),
+                                //           const SizedBox(width: 4),
+                                //           Text(
+                                //             pokemonType.name,
+                                //           ),
+                                //         ],
+                                //       ),
+                                //       selected: _selectedTypes.contains(pokemonType),
+                                //       onSelected: (bool selected) {
+                                //         setState(() {
+                                //           if (selected) {
+                                //             _selectedTypes.add(pokemonType);
+                                //           } else {
+                                //             _selectedTypes.remove(pokemonType);
+                                //           }
+                                //         });
+                                //       },
+                                //     );
+                                //   }).toList(),
+                                // ),
                                 Wrap(
                                   spacing: 5.0,
                                   children: PokemonType.values.map((PokemonType pokemonType) {

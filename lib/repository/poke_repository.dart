@@ -1,13 +1,11 @@
 import 'package:pokemon/models/pokemon_type.dart';
-
+import 'package:pokemon/utils/extension/iterable_extension.dart';
 import '../models/pokemon.dart';
-
 import 'api/poke_api.dart';
 
 class PokeRepository {
   List<Pokemon>? _pokemons;
 
-  /// Fetches a list of [Pokemon] from the [PokeApi].
   Future<List<Pokemon>> fetchPokemons({int chunkSize = 50}) async {
     if (_pokemons != null) {
       return Future.value(_pokemons);
@@ -25,6 +23,13 @@ class PokeRepository {
       ..sort((a, b) => a.name.toUpperCase().compareTo(b.name.toUpperCase()));
     return types;
   }
+
+  Future<void> deletePokemon(int index) async {
+    if (_pokemons != null && index >= 0 && index < _pokemons!.length) {
+      _pokemons!.removeAt(index);
+    }
+  }
+
 }
 
 PokeRepository pokeRepository = PokeRepository();
