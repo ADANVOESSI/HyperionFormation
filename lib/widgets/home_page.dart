@@ -202,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                         child: Center(
                                           child: Container(
                                             width: 80,
-                                            color: Colors.white,
+                                            // color: Colors.white,
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
@@ -291,6 +291,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () => {},
+              // _editPokemon(context, _selectedPokemon),
+          label: const Text('Edit'),
+          icon: const Icon(Icons.edit),
         ),
       ),
     );
