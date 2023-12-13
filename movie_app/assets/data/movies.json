@@ -1,0 +1,64 @@
+{
+  "movies": [
+    {
+      "id": 1,
+      "title": "Inception",
+      "overview": "Un voleur professionnel entre dans le subconscient de ses victimes pour obtenir des informations.",
+      "vote": 8.8
+    },
+    {
+      "id": 2,
+      "title": "Interstellar",
+      "overview": "Des explorateurs voyagent à travers un trou de ver près de Saturne pour assurer la survie de l'humanité.",
+      "vote": 8.6
+    },
+    {
+      "id": 3,
+      "title": "The Dark Knight",
+      "overview": "Quand le Joker émerge du passé mystérieux de Gotham City, Batman doit l'affronter.",
+      "vote": 9.0
+    },
+    {
+      "id": 4,
+      "title": "Matrix",
+      "overview": "Un informaticien découvre une réalité perturbante sur le monde réel.",
+      "vote": 8.7
+    },
+    {
+      "id": 5,
+      "title": "Avatar",
+      "overview": "Un ex-Marine se trouve déchiré entre deux mondes lorsqu'il est envoyé sur la planète Pandora.",
+      "vote": 7.8
+    },
+    {
+      "id": 6,
+      "title": "Star Wars: The Empire Strikes Back",
+      "overview": "L'Empire lance une contre-attaque totale contre les héros de la Rébellion.",
+      "vote": 8.8
+    },
+    {
+      "id": 7,
+      "title": "The Shawshank Redemption",
+      "overview": "Deux condamnés lient une amitié sur plusieurs années.",
+      "vote": 9.3
+    },
+    {
+      "id": 8,
+      "title": "Forrest Gump",
+      "overview": "L'histoire de la vie d'un homme avec un QI bas.",
+      "vote": 8.8
+    },
+    {
+      "id": 9,
+      "title": "Fight Club",
+      "overview": "Un homme insomniac et un fabricant de savon créent un club de combat souterrain.",
+      "vote": 8.8
+    },
+    {
+      "id": 10,
+      "title": "The Godfather",
+      "overview": "La vie d'un patriarche d'une famille mafieuse est transférée à son fils.",
+      "vote": 9.2
+    }
+  ]
+}
