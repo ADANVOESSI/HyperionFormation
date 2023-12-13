@@ -31,7 +31,6 @@ class _AddPokemonsState extends State<AddPokemons> {
       });
     } else {
     }
-    // if (_formKey.currentState!.validate()) {}
   }
 
   @override

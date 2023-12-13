@@ -23,16 +23,6 @@ class PokeApp extends StatelessWidget {
       ],
       theme: PokeTheme.themeLight,
       routerConfig: pokeRoutes,
-      // routerDelegate: pokeRoutes.routerDelegate,
-      // routeInformationParser: pokeRoutes.routeInformationParser,
-      // home: _Home(),
     );
   }
 }
-
-// class _Home extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return const SafeArea(child: Scaffold(body: MyHomePage()));
-//   }
-// }

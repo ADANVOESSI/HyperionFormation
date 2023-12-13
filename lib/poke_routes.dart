@@ -11,12 +11,6 @@ final pokeRoutes = GoRouter(
       path: '/',
       builder: (context, state) => const MyHomePage(),
       routes: [
-        // GoRoute(
-        //   path: 'editPokemons',
-        //   builder: (context, state) => EditPokemons(
-        //     initialPokemon: state.extra as Pokemon?,
-        //   ),
-        // ),
         GoRoute(
           path: 'addPokemons',
           builder: (context, state) => AddPokemons(),

@@ -4,6 +4,7 @@ import 'package:pokemon/models/pokemon_type.dart';
 import 'package:pokemon/poke_routes.dart';
 import 'package:pokemon/poke_theme.dart';
 import 'package:pokemon/repository/poke_repository.dart';
+import 'package:pokemon/widgets/home_page.dart';
 
 class EditPokemons extends StatefulWidget {
   const EditPokemons({
@@ -37,7 +38,7 @@ class _EditPokemonsState extends State<EditPokemons> {
     _imageUrlController = TextEditingController(text: selectedPokemon?.imageUrl ?? '');
   }
 
-  void _submitForm() {
+  void _submitForm(BuildContext context) {
     _name = _nameController.text.trim();
     _imageUrl = _imageUrlController.text.trim();
 
@@ -50,9 +51,9 @@ class _EditPokemonsState extends State<EditPokemons> {
       );
 
       pokeRepository.updatePokemon(updatedPokemon).then((_) {
-        pokeRoutes.go('/');
-        // Afficher un message de confirmation ou rediriger vers une autre page
-        // Vous pouvez également ajouter setState ici pour mettre à jour l'interface utilisateur si nécessaire
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => const MyHomePage(),
+        ));
       }).catchError((error) {});
     } else {}
   }
@@ -166,7 +167,9 @@ class _EditPokemonsState extends State<EditPokemons> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           ElevatedButton(
-                            onPressed: _submitForm,
+                            onPressed: () {
+                              _submitForm(context);
+                            },
                             child: const Text(
                               'Valider',
                               style: TextStyle(fontSize: 18),

@@ -8,11 +8,12 @@ class PokeRepository {
   List<PokemonType>? _pokemonType;
 
   Future<List<Pokemon>> fetchPokemons({int chunkSize = 200}) async {
-    if (_pokemons != null) {
-      return Future.value(_pokemons);
-    }
     _pokemons = await pokeApi.fetchPokemons(chunkSize: chunkSize);
-    return Future.value(_pokemons);
+    if (_pokemons != null) {
+      _pokemons!.sort((a, b) => a.name.compareTo(b.name));
+      return _pokemons!;
+    }
+    return [];
   }
 
   Future<List<PokemonType>>? fetchPokemonTypes() async {
@@ -45,6 +46,10 @@ class PokeRepository {
     if (_pokemons != null && index >= 0 && index < _pokemons!.length) {
       _pokemons!.removeAt(index);
     }
+  }
+
+  Future<void> deleteAllPokemons() async {
+    _pokemons?.clear();
   }
 }
 

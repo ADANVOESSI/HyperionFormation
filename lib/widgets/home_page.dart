@@ -14,12 +14,17 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Pokemon> pokemon = [];
+  List<Pokemon> allPokemon = [];
+  List<Pokemon> searchedPokemon = [];
   Pokemon? selectedPokemon;
   bool isLightTheme = true;
+  final TextEditingController _searchController = TextEditingController();
+  bool _isSearching = false;
 
   @override
   void initState() {
     super.initState();
+    allPokemon = List.from(pokemon);
     _loadPokemons();
   }
 
@@ -29,8 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
         context,
         MaterialPageRoute(
           builder: (context) => EditPokemons(
-            initialPokemon: selectedPokemon, // Pass the selectedPokemon as initialPokemon
-            pokemon: selectedPokemon, // Assign the same selectedPokemon to the pokemon property
+            initialPokemon: selectedPokemon,
+            pokemon: selectedPokemon,
           ),
         ),
       );
@@ -43,13 +48,13 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-
   _loadPokemons() async {
     try {
       List<Pokemon> fetchedPokemons = await pokeRepository.fetchPokemons();
 
       setState(() {
         pokemon = fetchedPokemons;
+        allPokemon = List.from(pokemon);
       });
     } catch (e) {
       print('Erreur lors du chargement des Pokémon: $e');
@@ -71,16 +76,58 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: const Icon(Icons.home),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: const Text(
-            'Pokemons',
-            style: TextStyle(fontSize: 22, fontFamily: 'Poppins', fontWeight: FontWeight.w500),
-          ),
+          title: _isSearching
+              ? TextField(
+                  controller: _searchController,
+                  decoration: const InputDecoration(
+                    hintText: 'Rechercher un Pokemon...',
+                    hintStyle: TextStyle(),
+                  ),
+                  style: const TextStyle(),
+                  onChanged: (value) {
+                    setState(() {
+                      searchedPokemon = allPokemon.where((poke) => poke.name.toLowerCase().contains(value.toLowerCase())).toList();
+                    });
+                  },
+                )
+              : const Text(
+                  'Pokemons',
+                  style: TextStyle(fontSize: 22, fontFamily: 'Poppins', fontWeight: FontWeight.w500),
+                ),
           actions: <Widget>[
+            _isSearching
+                ? IconButton(
+                    icon: const Icon(Icons.close),
+                    iconSize: 28,
+                    onPressed: () {
+                      setState(() {
+                        _isSearching = false;
+                        _searchController.clear();
+                      });
+                    },
+                  )
+                : IconButton(
+                    icon: const Icon(Icons.search),
+                    iconSize: 28,
+                    onPressed: () {
+                      setState(() {
+                        _isSearching = true;
+                      });
+                    },
+                  ),
             IconButton(
               iconSize: 28,
-              icon: const Icon(Icons.search),
-              onPressed: () {},
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                _showDeleteConfirmationDialog(context);
+              },
             ),
+            IconButton(
+                iconSize: 28,
+                icon: const Icon(Icons.download),
+                onPressed: () {
+                  _loadPokemons();
+                }),
             IconButton(
               iconSize: 28,
               icon: const Icon(Icons.add),
@@ -132,53 +179,58 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: TabBarView(
                           children: [
                             ListView.builder(
-                              itemCount: pokemon.length,
+                              itemCount: _isSearching ? searchedPokemon.length : pokemon.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return Dismissible(
-                                  key: Key(pokemon[index].id.toString()),
-                                  direction: DismissDirection.startToEnd,
-                                  background: Container(
-                                    alignment: Alignment.centerLeft,
-                                    color: Colors.red,
-                                    child: const Icon(
-                                      Icons.delete,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  onDismissed: (DismissDirection direction) async {
-                                    await pokeRepository.deletePokemon(index);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: const Text('Pokemon supprimé'),
-                                        action: SnackBarAction(
-                                          label: 'Annuler',
-                                          onPressed: () {
-                                            setState(() {});
-                                          },
-                                        ),
+                                final currentPokemon = _isSearching ? searchedPokemon[index] : pokemon[index];
+                                return Visibility(
+                                  visible: _isSearching && currentPokemon.name.toLowerCase() != _searchController.text.toLowerCase(),
+                                  replacement: Dismissible(
+                                    key: Key(currentPokemon.id.toString()),
+                                    direction: DismissDirection.startToEnd,
+                                    background: Container(
+                                      alignment: Alignment.centerLeft,
+                                      color: Colors.red,
+                                      child: const Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
                                       ),
-                                    );
-                                  },
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedPokemon = pokemon[index];
-                                      });
+                                    ),
+                                    onDismissed: (DismissDirection direction) async {
+                                      await pokeRepository.deletePokemon(index);
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: const Text('Pokemon supprimé'),
+                                          action: SnackBarAction(
+                                            label: 'Annuler',
+                                            onPressed: () {
+                                              setState(() {});
+                                            },
+                                          ),
+                                        ),
+                                      );
                                     },
-                                    child: Card(
-                                      color: Colors.transparent,
-                                      elevation: 0,
-                                      child: ListTile(
-                                        leading: CircleAvatar(
-                                          radius: 28,
-                                          child: pokemon[index].imageUrl.isNotEmpty ? Image.network(pokemon[index].imageUrl) : const FlutterLogo(size: 24),
+                                    child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedPokemon = currentPokemon;
+                                        });
+                                      },
+                                      child: Card(
+                                        color: Colors.transparent,
+                                        elevation: 0,
+                                        child: ListTile(
+                                          leading: CircleAvatar(
+                                            radius: 28,
+                                            child: currentPokemon.imageUrl.isNotEmpty ? Image.network(currentPokemon.imageUrl) : const FlutterLogo(size: 24),
+                                          ),
+                                          title: Text(currentPokemon.name),
+                                          subtitle: Text('Types: ${currentPokemon.types.map((type) => type.name).join(', ')}'),
+                                          trailing: const Icon(Icons.favorite_border),
                                         ),
-                                        title: Text(pokemon[index].name),
-                                        subtitle: Text('Types: ${pokemon[index].types.map((type) => type.name).join(', ')}'),
-                                        trailing: const Icon(Icons.favorite_border),
                                       ),
                                     ),
                                   ),
+                                  child: Container(),
                                 );
                               },
                             ),
@@ -186,74 +238,78 @@ class _MyHomePageState extends State<MyHomePage> {
                               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 4,
                               ),
-                              itemCount: pokemon.length,
+                              itemCount: _isSearching ? searchedPokemon.length : pokemon.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return Dismissible(
-                                  key: Key(pokemon[index].id.toString()),
-                                  direction: DismissDirection.startToEnd,
-                                  background: Container(
-                                    alignment: Alignment.centerLeft,
-                                    color: Colors.red,
-                                    child: const Icon(
-                                      Icons.delete,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  onDismissed: (DismissDirection direction) async {
-                                    await pokeRepository.deletePokemon(index);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: const Text('Pokemon supprimé'),
-                                        action: SnackBarAction(
-                                          label: 'Annuler',
-                                          onPressed: () {
-                                            setState(() {});
-                                          },
-                                        ),
+                                final currentPokemon = _isSearching ? searchedPokemon[index] : pokemon[index];
+                                return Visibility(
+                                  visible: _isSearching && currentPokemon.name.toLowerCase() != _searchController.text.toLowerCase(),
+                                  replacement: Dismissible(
+                                    key: Key(currentPokemon.id.toString()),
+                                    direction: DismissDirection.startToEnd,
+                                    background: Container(
+                                      alignment: Alignment.centerLeft,
+                                      color: Colors.red,
+                                      child: const Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
                                       ),
-                                    );
-                                  },
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedPokemon = pokemon[index];
-                                      });
+                                    ),
+                                    onDismissed: (DismissDirection direction) async {
+                                      await pokeRepository.deletePokemon(index);
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: const Text('Pokemon supprimé'),
+                                          action: SnackBarAction(
+                                            label: 'Annuler',
+                                            onPressed: () {
+                                              setState(() {});
+                                            },
+                                          ),
+                                        ),
+                                      );
                                     },
-                                    child: Card(
-                                      color: Colors.transparent,
-                                      elevation: 0,
-                                      child: GridTile(
-                                        child: Center(
-                                          child: Container(
-                                            width: 80,
-                                            // color: Colors.white,
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                SizedBox(
-                                                  height: 60,
-                                                  child: pokemon[index].imageUrl.isNotEmpty
-                                                      ? Image.network(
-                                                          pokemon[index].imageUrl,
-                                                          fit: BoxFit.cover,
-                                                        )
-                                                      : const FlutterLogo(size: 24),
-                                                ),
-                                                Expanded(
-                                                  child: Center(
-                                                    child: Text(
-                                                      pokemon[index].name,
-                                                      textAlign: TextAlign.center,
+                                    child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedPokemon = currentPokemon;
+                                        });
+                                      },
+                                      child: Card(
+                                        color: Colors.transparent,
+                                        elevation: 0,
+                                        child: GridTile(
+                                          child: Center(
+                                            child: Container(
+                                              width: 80,
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  SizedBox(
+                                                    height: 60,
+                                                    child: currentPokemon.imageUrl.isNotEmpty
+                                                        ? Image.network(
+                                                            currentPokemon.imageUrl,
+                                                            fit: BoxFit.cover,
+                                                          )
+                                                        : const FlutterLogo(size: 24),
+                                                  ),
+                                                  Expanded(
+                                                    child: Center(
+                                                      child: Text(
+                                                        currentPokemon.name,
+                                                        textAlign: TextAlign.center,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
+                                  child: Container(),
                                 );
                               },
                             ),
@@ -271,43 +327,45 @@ class _MyHomePageState extends State<MyHomePage> {
               child: selectedPokemon != null
                   ? Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  selectedPokemon!.name,
-                                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                                ),
-                                selectedPokemon!.imageUrl.isNotEmpty ? Image.network(selectedPokemon!.imageUrl) : const FlutterLogo(size: 100),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Wrap(
-                            spacing: 8.0,
-                            children: selectedPokemon!.types.map((type) {
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Image.network(
-                                    type.imageUrl,
-                                    width: 40,
-                                    height: 40,
-                                  ),
-                                  const SizedBox(width: 2),
                                   Text(
-                                    type.name,
-                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                                    selectedPokemon!.name,
+                                    style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                                   ),
+                                  selectedPokemon!.imageUrl.isNotEmpty ? Image.network(selectedPokemon!.imageUrl) : const FlutterLogo(size: 100),
                                 ],
-                              );
-                            }).toList(),
-                          ),
-                        ],
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Wrap(
+                              spacing: 8.0,
+                              children: selectedPokemon!.types.map((type) {
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Image.network(
+                                      type.imageUrl,
+                                      width: 40,
+                                      height: 40,
+                                    ),
+                                    const SizedBox(width: 2),
+                                    Text(
+                                      type.name,
+                                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        ),
                       ),
                     )
                   : const Center(
@@ -322,6 +380,37 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: const Icon(Icons.edit),
         ),
       ),
+    );
+  }
+
+  void _showDeleteConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirmation de suppression"),
+          content: const Text("Êtes-vous sûr de vouloir supprimer tous les Pokémons ?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text("Annuler"),
+            ),
+            TextButton(
+              onPressed: () async {
+                await pokeRepository.deleteAllPokemons();
+                setState(() {
+                  pokemon.clear();
+                  selectedPokemon = null;
+                });
+                Navigator.of(context).pop(true);
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
     );
   }
 }
