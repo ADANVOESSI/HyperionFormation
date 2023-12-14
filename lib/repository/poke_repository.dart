@@ -7,8 +7,10 @@ class PokeRepository {
   List<Pokemon>? _pokemons;
   List<PokemonType>? _pokemonType;
 
-  Future<List<Pokemon>> fetchPokemons({int chunkSize = 200}) async {
-    _pokemons = await pokeApi.fetchPokemons(chunkSize: chunkSize);
+  PokeRepository._();
+
+  Future<List<Pokemon>> fetchPokemons() async {
+    _pokemons = await pokeApi.fetchPokemonsOnFirebase();
     if (_pokemons != null) {
       _pokemons!.sort((a, b) => a.name.compareTo(b.name));
       return _pokemons!;
@@ -16,15 +18,13 @@ class PokeRepository {
     return [];
   }
 
-  Future<List<PokemonType>>? fetchPokemonTypes() async {
-    if (_pokemonType != null) {
-      return Future.value(_pokemonType);
-    }
-
+  Future<List<PokemonType>> fetchPokemonTypes() async {
     final pokemons = await fetchPokemons();
 
-    _pokemonType = pokemons.expand((pokemon) => pokemon.types).distinctBy((e) => e.name).toList(growable: false)..sort((a, b) => a.name.toUpperCase().compareTo(b.name.toUpperCase()));
-    return Future.value(_pokemonType);
+    print("Mes types de pokemons sont : $pokemons");
+    final List<PokemonType> allTypes = pokemons.expand((pokemon) => pokemon.types).toList().distinctBy((type) => type.name).toList(growable: false)
+      ..sort((a, b) => a.name.toUpperCase().compareTo(b.name.toUpperCase()));
+    return allTypes;
   }
 
   Future<void> addPokemon(Pokemon pokemon) async {
@@ -53,7 +53,7 @@ class PokeRepository {
   }
 }
 
-PokeRepository pokeRepository = PokeRepository();
+PokeRepository pokeRepository = PokeRepository._();
 
 // Future<List<PokemonType>>? fetchPokemonTypes() async {
 //   final pokemons = await fetchPokemons();

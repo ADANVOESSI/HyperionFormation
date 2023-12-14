@@ -13,7 +13,7 @@ class AddPokemons extends StatefulWidget {
 
 class _AddPokemonsState extends State<AddPokemons> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final pokeRepository = PokeRepository();
+  // final pokeRepository = PokeRepository();
   List<Pokemon> pokemon = [];
   bool isLightTheme = true;
 

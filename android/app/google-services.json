@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "724700203580",
-    "project_id": "formation-pokemons",
-    "storage_bucket": "formation-pokemons.appspot.com"
+    "project_number": "576862081899",
+    "firebase_url": "https://formationhyperion-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "formationhyperion",
+    "storage_bucket": "formationhyperion.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:724700203580:android:f4b294c57421a785d41139",
+        "mobilesdk_app_id": "1:576862081899:android:1bdf3c0d5cc135a550722e",
         "android_client_info": {
           "package_name": "fr.formation.pokemon"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBbILniNWEC2XspLIR3g3-mcaaoKejjbPM"
+          "current_key": "AIzaSyAa_UsLfFNe0xqvxx_0j4fJc4_4HBe8vkw"
         }
       ],
       "services": {

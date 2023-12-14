@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/models/pokemon_type.dart';
-import 'package:pokemon/poke_routes.dart';
 import 'package:pokemon/poke_theme.dart';
 import 'package:pokemon/repository/poke_repository.dart';
 import 'package:pokemon/widgets/home_page.dart';

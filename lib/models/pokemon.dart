@@ -27,6 +27,15 @@ class Pokemon {
     );
   }
 
+   Map<String, dynamic> toJson() {
+     return {
+       'id': id,
+       'name': name,
+       'image': imageUrl,
+       'types': types.map((type) => type.toJson()).toList(),
+     };
+   }
+
   @override
   String toString() {
     return '${name.padRight(15)} | [${types.map((t) => t.name).join(',')}]';

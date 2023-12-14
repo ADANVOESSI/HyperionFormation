@@ -25,22 +25,22 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for ios - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       default:
         throw UnsupportedError(
@@ -50,19 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBSbco-_8NqnxY787jUsQonFxswWvxJsV4',
-    appId: '1:724700203580:web:1f2dc104a0c2bf63d41139',
-    messagingSenderId: '724700203580',
-    projectId: 'formation-pokemons',
-    authDomain: 'formation-pokemons.firebaseapp.com',
-    storageBucket: 'formation-pokemons.appspot.com',
+    apiKey: 'AIzaSyC6U1xB7F_pgoQzerjcZkuLEwDp12eY_1I',
+    appId: '1:576862081899:web:53fb2e78869b85d250722e',
+    messagingSenderId: '576862081899',
+    projectId: 'formationhyperion',
+    authDomain: 'formationhyperion.firebaseapp.com',
+    databaseURL: 'https://formationhyperion-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'formationhyperion.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBbILniNWEC2XspLIR3g3-mcaaoKejjbPM',
-    appId: '1:724700203580:android:f4b294c57421a785d41139',
-    messagingSenderId: '724700203580',
-    projectId: 'formation-pokemons',
-    storageBucket: 'formation-pokemons.appspot.com',
+    apiKey: 'AIzaSyAa_UsLfFNe0xqvxx_0j4fJc4_4HBe8vkw',
+    appId: '1:576862081899:android:1bdf3c0d5cc135a550722e',
+    messagingSenderId: '576862081899',
+    projectId: 'formationhyperion',
+    databaseURL: 'https://formationhyperion-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'formationhyperion.appspot.com',
   );
 }

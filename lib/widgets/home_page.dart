@@ -4,6 +4,7 @@ import 'package:pokemon/poke_routes.dart';
 import 'package:pokemon/poke_theme.dart';
 import 'package:pokemon/repository/poke_repository.dart';
 import 'package:pokemon/widgets/edit_pokemons.dart';
+// import 'package:async/async.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isLightTheme = true;
   final TextEditingController _searchController = TextEditingController();
   bool _isSearching = false;
+  // final AsyncMemoizer _memoizer = AsyncMemoizer();
 
   @override
   void initState() {
@@ -27,6 +29,15 @@ class _MyHomePageState extends State<MyHomePage> {
     allPokemon = List.from(pokemon);
     _loadPokemons();
   }
+
+  // void _searchPokemon(String value) {
+  //   _memoizer.runOnce(() async {
+  //     searchedPokemon = allPokemon.where((poke) => poke.name.toLowerCase().contains(value.toLowerCase())).toList();
+  //     setState(() {});
+  //     await Future.delayed(const Duration(milliseconds: 300));
+  //     // _memoizer.reset(); // Réinitialise l'AsyncMemoizer après le délai pour permettre de nouvelles recherches
+  //   });
+  // }
 
   void _editPokemon(BuildContext context, Pokemon? selectedPokemon) {
     if (selectedPokemon != null) {
@@ -84,6 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     hintStyle: TextStyle(),
                   ),
                   style: const TextStyle(),
+                  // onChanged: _searchPokemon,
                   onChanged: (value) {
                     setState(() {
                       searchedPokemon = allPokemon.where((poke) => poke.name.toLowerCase().contains(value.toLowerCase())).toList();
