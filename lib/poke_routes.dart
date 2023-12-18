@@ -6,7 +6,7 @@ final pokeRoutes = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const PokemonsScreen(),
+      builder: (context, state) => PokemonsScreen(),
       routes: [
         GoRoute(
           path: 'addPokemons',

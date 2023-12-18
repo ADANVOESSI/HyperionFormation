@@ -63,7 +63,7 @@ class _EditPokemonsState extends State<EditPokemons> {
       pokeRepository.updatePokemon(updatedPokemon).then((_) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => const PokemonsScreen(),
+            builder: (context) => PokemonsScreen(),
           ),
         );
       }).catchError((error) {});
