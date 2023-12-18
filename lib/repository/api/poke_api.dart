@@ -8,12 +8,11 @@ class PokeApi {
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<List<Pokemon>> fetchPokemons({int chunkSize = 250}) async {
+  Future<List<Pokemon>> fetchPokemons({int chunkSize = 100}) async {
     final response = await http.get(Uri.parse('https://pokebuildapi.fr/api/v1/pokemon/limit/$chunkSize'));
     if (response.statusCode == 200) {
       final jsonArray = jsonDecode(response.body) as List? ?? [];
-      final pokemons = jsonArray.cast<Map<String, dynamic>>().map((json) => Pokemon.fromJson(json)).toList();
-
+      final pokemons = jsonArray.cast<Map<String, dynamic>>().map((json) => Pokemon.fromJson(json, dataSource: 'api')).toList();
       return pokemons;
     } else {
       throw Exception('Failed to fetch Pokemon');
@@ -36,8 +35,7 @@ class PokeApi {
   Future<List<Pokemon>> fetchPokemonsOnFirebase() async {
     try {
       QuerySnapshot querySnapshot = await _firestore.collection('pokemons').get();
-      List<Pokemon> pokemons = querySnapshot.docs.map((doc) => Pokemon.fromJson(doc.data() as Map<String, dynamic>)).toList();
-      print("Les pokemons ici : $pokemons");
+      List<Pokemon> pokemons = querySnapshot.docs.map((doc) => Pokemon.fromJson(doc.data() as Map<String, dynamic>, dataSource: 'firestore')).toList();
       if (pokemons.isEmpty) {
         await savePokemonsToFirestore();
         return await fetchPokemons();

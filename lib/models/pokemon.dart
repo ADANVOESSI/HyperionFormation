@@ -15,17 +15,17 @@ class Pokemon {
 
    bool isValid() => name.isNotEmpty && imageUrl.isNotEmpty && types.isNotEmpty;
 
-   factory Pokemon.fromJson(Map<String, dynamic> json) {
-    final jsonTypesArray = json['apiTypes'] as List? ?? [];
-    final types =
-    jsonTypesArray.map((type) => PokemonType.fromJson(type)).toList();
-    return Pokemon(
-      id: json['id'],
-      name: json['name'],
-      imageUrl: json['image'],
-      types: types,
-    );
-  }
+   factory Pokemon.fromJson(Map<String, dynamic> json, {String dataSource = 'api'}) {
+     final jsonTypesKey = (dataSource == 'api') ? 'apiTypes' : 'types';
+     final jsonTypesArray = json[jsonTypesKey] as List? ?? [];
+     final types = jsonTypesArray.map((type) => PokemonType.fromJson(type)).toList();
+     return Pokemon(
+       id: json['id'],
+       name: json['name'],
+       imageUrl: json['image'],
+       types: types,
+     );
+   }
 
    Map<String, dynamic> toJson() {
      return {
