@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../models/pokemon.dart';
+import 'package:pokemon/models/pokemon.dart';
 
 enum PokemonsStatus { initial, loading, success, failure }
 
@@ -40,5 +40,6 @@ class PokemonsState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [status,isLightTheme, pokemons, deletedPokemon, searchedPokemon];
+  List<Object?> get props =>
+      [status, isLightTheme, pokemons, deletedPokemon, searchedPokemon];
 }

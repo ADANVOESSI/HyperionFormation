@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:pokemon/models/pokemon_type.dart';
 
 class TypePokemon extends StatefulWidget {
@@ -8,11 +8,11 @@ class TypePokemon extends StatefulWidget {
   final void Function(bool) onChanged;
 
   const TypePokemon(
-      this._type, {
-        required this.onChanged,
-        this.initialValue = false,
-        super.key,
-      });
+    this._type, {
+    required this.onChanged,
+    this.initialValue = false,
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() => _TypePokemonState();

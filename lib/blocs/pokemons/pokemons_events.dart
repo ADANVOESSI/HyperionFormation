@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../models/pokemon.dart';
+import 'package:pokemon/models/pokemon.dart';
 
 sealed class PokemonsEvent extends Equatable {
   const PokemonsEvent();
@@ -31,7 +31,6 @@ class PokemonSelected extends PokemonsEvent {
   List<Object> get props => [selectedPokemon];
 }
 
-
 class DeleteAllPokemons extends PokemonsEvent {}
 
 class ThemeChanged extends PokemonsEvent {
@@ -51,4 +50,3 @@ class SearchPokemon extends PokemonsEvent {
   @override
   List<Object> get props => [searchText];
 }
-

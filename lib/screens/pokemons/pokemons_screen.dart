@@ -4,12 +4,17 @@ import 'package:pokemon/blocs/pokemons/pokemons_bloc.dart';
 import 'package:pokemon/blocs/pokemons/pokemons_events.dart';
 import 'package:pokemon/blocs/pokemons/pokemons_state.dart';
 import 'package:pokemon/models/pokemon.dart';
-import 'package:pokemon/poke_routes.dart';
 import 'package:pokemon/repository/poke_repository.dart';
 import 'package:pokemon/screens/pokemons_edit/edit_pokemons.dart';
 
+import '../../poke_routes.dart';
+import 'details_pokemons.dart';
+
 class PokemonsScreen extends StatelessWidget {
-  late final PokemonsBloc pokemonsBloc;
+  final PokemonsBloc pokemonsBloc;
+
+  PokemonsScreen({required this.pokemonsBloc, super.key});
+
   List<Pokemon> pokemon = [];
   List<Pokemon> allPokemon = [];
   List<Pokemon> searchedPokemon = [];
@@ -39,8 +44,8 @@ class PokemonsScreen extends StatelessWidget {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
+    context.read<PokemonsBloc>().add(LoadPokemons());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -124,11 +129,10 @@ class PokemonsScreen extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (state.status == PokemonsStatus.failure) {
             return const Center(child: Text('Erreur lors du chargement des Pokémon'));
-          } else if (state.status == PokemonsStatus.success) {
+          } else {
             return Row(
               children: [
                 Expanded(
-                  flex: 1,
                   child: DefaultTabController(
                     length: 2,
                     child: Scaffold(
@@ -190,6 +194,7 @@ class PokemonsScreen extends StatelessWidget {
                                         child: InkWell(
                                           onTap: () {
                                             context.read<PokemonsBloc>().add(PokemonSelected(currentPokemon));
+                                            print("Le currentPokemon sélectionné est : $currentPokemon");
                                           },
                                           child: Card(
                                             color: Colors.transparent,
@@ -247,6 +252,7 @@ class PokemonsScreen extends StatelessWidget {
                                         child: InkWell(
                                           onTap: () {
                                             context.read<PokemonsBloc>().add(PokemonSelected(currentPokemon));
+                                            print("Le currentPokemon sélectionné est : $currentPokemon");
                                           },
                                           child: Card(
                                             color: Colors.transparent,
@@ -289,7 +295,7 @@ class PokemonsScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -298,75 +304,13 @@ class PokemonsScreen extends StatelessWidget {
                 const VerticalDivider(width: 10),
                 Expanded(
                   flex: 2,
-                  child: BlocBuilder<PokemonsBloc, PokemonsState>(
-                    builder: (context, state) {
-                      if (state.status == PokemonsStatus.success) {
-                        if (state.selectedPokemon != null) {
-                          selectedPokemon = state.selectedPokemon;
-
-                          // Utilisation de forceRefresh pour rafraîchir le widget
-                          // context.forceRefresh();
-
-                          return Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          selectedPokemon!.name,
-                                          style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                                        ),
-                                        selectedPokemon!.imageUrl.isNotEmpty ? Image.network(selectedPokemon!.imageUrl) : const FlutterLogo(size: 100),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Wrap(
-                                    spacing: 8.0,
-                                    children: selectedPokemon!.types.map((type) {
-                                      return Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Image.network(
-                                            type.imageUrl,
-                                            width: 40,
-                                            height: 40,
-                                          ),
-                                          const SizedBox(width: 2),
-                                          Text(
-                                            type.name,
-                                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                                          ),
-                                        ],
-                                      );
-                                    }).toList(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        } else {
-                          return const Center(
-                            child: Text('Sélectionnez un Pokémon'),
-                          );
-                        }
-                      } else if (state.status == PokemonsStatus.failure) {
-                        return const Center(child: Text('Erreur lors du chargement des Pokémon'));
-                      } else {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                    },
-                  ),
+                  child: Builder(builder: (context) {
+                    return DetailPokemon(context.select((PokemonsBloc pokemonBloc) => pokemonBloc.state.selectedPokemon));
+                  }),
                 ),
               ],
             );
           }
-          return const Center(child: Text('Aucun Pokémon à afficher'));
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -382,21 +326,21 @@ class PokemonsScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Confirmation de suppression"),
-          content: const Text("Êtes-vous sûr de vouloir supprimer tous les Pokémons ?"),
+          title: const Text('Confirmation de suppression'),
+          content: const Text('Êtes-vous sûr de vouloir supprimer tous les Pokémons ?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: const Text("Annuler"),
+              child: const Text('Annuler'),
             ),
             TextButton(
               onPressed: () {
                 pokemonsBloc.add(DeleteAllPokemons());
                 Navigator.of(context).pop(true);
               },
-              child: const Text("OK"),
+              child: const Text('OK'),
             ),
           ],
         );

@@ -2,7 +2,7 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_classes_with_only_static_members
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
-    show defaultTargetPlatform, kIsWeb, TargetPlatform;
+    show TargetPlatform, defaultTargetPlatform, kIsWeb;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -55,7 +55,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '576862081899',
     projectId: 'formationhyperion',
     authDomain: 'formationhyperion.firebaseapp.com',
-    databaseURL: 'https://formationhyperion-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://formationhyperion-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'formationhyperion.appspot.com',
   );
 
@@ -64,7 +65,8 @@ class DefaultFirebaseOptions {
     appId: '1:576862081899:android:1bdf3c0d5cc135a550722e',
     messagingSenderId: '576862081899',
     projectId: 'formationhyperion',
-    databaseURL: 'https://formationhyperion-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://formationhyperion-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'formationhyperion.appspot.com',
   );
 }

@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pokemon/models/pokemon.dart';
 import 'package:pokemon/models/pokemon_type.dart';
+import 'package:pokemon/repository/api/poke_api.dart';
 import 'package:pokemon/utils/extension/iterable_extension.dart';
-import '../models/pokemon.dart';
-import 'api/poke_api.dart';
 
 class PokeRepository {
   List<Pokemon>? _pokemons;
-  List<PokemonType>? _pokemonType;
 
   PokeRepository._();
 
@@ -21,7 +20,11 @@ class PokeRepository {
 
   Future<List<PokemonType>> fetchPokemonTypes() async {
     final pokemons = await fetchPokemons();
-    final List<PokemonType> allTypes = pokemons.expand((pokemon) => pokemon.types).toList().distinctBy((type) => type.name).toList(growable: false)
+    final allTypes = pokemons
+        .expand((pokemon) => pokemon.types)
+        .toList()
+        .distinctBy((type) => type.name)
+        .toList(growable: false)
       ..sort((a, b) => a.name.toUpperCase().compareTo(b.name.toUpperCase()));
     return allTypes;
   }
@@ -30,13 +33,17 @@ class PokeRepository {
     pokemon.id = (_pokemons?.length ?? 0) + 1;
     _pokemons
       ?..add(pokemon)
-      ..sort((first, second) => first.name.toLowerCase().compareTo(second.name.toLowerCase()));
+      ..sort((first, second) =>
+          first.name.toLowerCase().compareTo(second.name.toLowerCase()));
   }
 
   Future<void> updatePokemon(Pokemon pokemon) async {
-    print("La liste des pokemons : ${pokemon.types}");
+    print('La liste des pokemons : ${pokemon.types}');
     try {
-      await FirebaseFirestore.instance.collection('pokemons').doc(pokemon.id.toString()).update(pokemon.toJson());
+      await FirebaseFirestore.instance
+          .collection('pokemons')
+          .doc(pokemon.id.toString())
+          .update(pokemon.toJson());
     } catch (e) {
       throw Exception('Failed to update Pokemon: $e');
     }
@@ -44,14 +51,17 @@ class PokeRepository {
 
   Future<void> deletePokemon(int index) async {
     try {
-      final QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('pokemons').where('id', isEqualTo: index).get();
+      final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('pokemons')
+          .where('id', isEqualTo: index)
+          .get();
 
-      final List<QueryDocumentSnapshot> documents = querySnapshot.docs;
+      final documents = querySnapshot.docs;
 
       if (documents.isNotEmpty) {
         await documents.first.reference.delete();
       } else {
-        print('Aucun Pokemon avec l\'ID $index trouvé.');
+        print("Aucun Pokemon avec l'ID $index trouvé.");
       }
     } catch (e) {
       throw Exception('Failed to delete Pokemon');
@@ -60,9 +70,10 @@ class PokeRepository {
 
   Future<void> deleteAllPokemons() async {
     try {
-      final QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('pokemons').get();
+      final QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('pokemons').get();
 
-      final List<QueryDocumentSnapshot> documents = querySnapshot.docs;
+      final documents = querySnapshot.docs;
       await Future.forEach(documents, (doc) async {
         await doc.reference.delete();
       });
