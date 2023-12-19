@@ -45,7 +45,6 @@ class PokemonsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<PokemonsBloc>().add(LoadPokemons());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,

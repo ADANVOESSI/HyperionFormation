@@ -39,14 +39,15 @@ class PokemonsBloc extends Bloc<PokemonsEvent, PokemonsState> {
     emit(state.copyWith(isLightTheme: _isLightTheme));
   }
 
-  // Future<void> _pokemonSelected(
-  //     PokemonSelected event, Emitter<PokemonsState> emit) async {
-  //   emit(state.copyWith(selectedPokemon: event.selectedPokemon));
-  // }
-
   void _pokemonSelected(PokemonSelected event, Emitter<PokemonsState> emit) {
     emit(state.copyWith(selectedPokemon: event.selectedPokemon));
     print('La sélection dans le bloc : ${event.selectedPokemon}');
+  }
+
+  @override
+  void onChange(Change<PokemonsState> change) {
+    super.onChange(change);
+    print(change);
   }
 
   void _searchPokemon(SearchPokemon event, Emitter<PokemonsState> emit) {

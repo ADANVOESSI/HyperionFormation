@@ -1,6 +1,6 @@
 import 'package:pokemon/models/pokemon_type.dart';
 
-class Pokemon {
+class Pokemon{
   int id;
   String name;
   String imageUrl;
@@ -42,4 +42,5 @@ class Pokemon {
   String toString() {
     return '${name.padRight(15)} | [${types.map((t) => t.name).join(',')}]';
   }
+
 }
