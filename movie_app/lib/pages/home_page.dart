@@ -5,15 +5,15 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Movie App'),
+        title: const Text('Movie App'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           // Centre les éléments verticalement
           children: [
-            Text('Bienvenue sur Movie App!'),
-            SizedBox(height: 20),
+            const Text('Bienvenue sur Movie App!'),
+            const SizedBox(height: 20),
             // Espacement entre le texte et les boutons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -21,10 +21,16 @@ class HomePage extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed('/addEditMoviePage');
+                    Navigator.of(context).pushNamed('/addEditMoviePage');
                   },
-                  child: Text(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: const Color(0xFF005992),
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Text(
                     "Ajouter un film",
                     style: TextStyle(
                       fontSize: 16,
@@ -32,31 +38,24 @@ class HomePage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
-                    onPrimary: Color(0xFF005992),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed('/listfilms');
                   },
-                  child: Text(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: const Color(0xFF005992),
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Text(
                     "Voir liste",
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
-                    onPrimary: Color(0xFF005992),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                 ),
