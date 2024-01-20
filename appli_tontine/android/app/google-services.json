@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "840182772603",
+    "project_id": "transfert-df6d1",
+    "storage_bucket": "transfert-df6d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:840182772603:android:9b1221c15f0813a0e883de",
+        "android_client_info": {
+          "package_name": "com.example.appli_tontine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "840182772603-peg2ovb2rt7auitgbl4l9556tlkcrfvf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlNmnatU_uQ9WHx8wYnKx90kxro1uegy0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "840182772603-peg2ovb2rt7auitgbl4l9556tlkcrfvf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

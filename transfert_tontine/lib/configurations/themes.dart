@@ -14,7 +14,7 @@ class AppliSizes {
   static const double imageRadius = 8;
   static const double linePadding = 4;
   static const double widgetBorderRadius = 34;
-  static const double textFieldRadius = 4.0;
+  static const double textFieldRadius = 4;
   static const EdgeInsets bottomSheetPadding = EdgeInsets.symmetric(horizontal: 16, vertical: 10);
   static const appBarSize = 20.0;
   static const appBarExpandedSize = 180.0;
@@ -71,124 +71,123 @@ class ColorConstants {
   };
 }
 
-
-class AppliTontineTheme {
-  static ThemeData of(context) {
-    var theme = Theme.of(context);
-    return theme.copyWith(
-      primaryColor: AppliColors.main,
-      primaryColorLight: AppliColors.lightGray,
-      dialogBackgroundColor: AppliColors.backgroundLight,
-      dividerColor: Colors.transparent,
-      appBarTheme: theme.appBarTheme.copyWith(
-          color: AppliColors.white,
-          iconTheme: const IconThemeData(color: AppliColors.black),
-          toolbarTextStyle: theme.textTheme
-              .copyWith(
-              bodySmall: const TextStyle(
-                color: AppliColors.black,
-                fontSize: 18,
-                fontFamily: 'Metropolis',
-                fontWeight: FontWeight.w400,
-              ))
-              .bodyMedium,
-          titleTextStyle: theme.textTheme
-              .copyWith(
-              bodySmall: const TextStyle(
-                color: AppliColors.black,
-                fontSize: 18,
-                fontFamily: 'Metropolis',
-                fontWeight: FontWeight.w400,
-              ))
-              .titleLarge),
-      textTheme: theme.textTheme
-          .copyWith(
-        //over image white text
-        headlineSmall: theme.textTheme.headlineSmall?.copyWith(
-          fontSize: 48,
-          color: AppliColors.white,
-          fontFamily: 'Metropolis',
-          fontWeight: FontWeight.w900,
-        ),
-        titleLarge: theme.textTheme.titleLarge?.copyWith(
-          fontSize: 24,
-          color: AppliColors.black,
-          fontWeight: FontWeight.w900,
-          fontFamily: 'Metropolis',
-        ),
-        //
-
-        //product title
-        headlineMedium: theme.textTheme.headlineMedium?.copyWith(
-          color: AppliColors.black,
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          fontFamily: 'Metropolis',
-        ),
-
-        displaySmall: theme.textTheme.displaySmall?.copyWith(
-          fontFamily: 'Metropolis',
-          fontWeight: FontWeight.w400,
-        ),
-        //product price
-        displayMedium: theme.textTheme.displayMedium?.copyWith(
-          color: AppliColors.lightGray,
-          fontSize: 14,
-          fontFamily: 'Metropolis',
-          fontWeight: FontWeight.w400,
-        ),
-        displayLarge: theme.textTheme.displayLarge?.copyWith(
-          fontFamily: 'Metropolis',
-          fontWeight: FontWeight.w500,
-        ),
-
-        titleSmall: theme.textTheme.titleSmall?.copyWith(
-          fontSize: 18,
-          color: AppliColors.black,
-          fontFamily: 'Metropolis',
-          fontWeight: FontWeight.w400,
-        ),
-
-        titleMedium: theme.textTheme.titleMedium?.copyWith(
-          fontSize: 24,
-          color: AppliColors.darkGray,
-          fontFamily: 'Metropolis',
-          fontWeight: FontWeight.w500,
-        ),
-        //red button with white text
-        labelLarge: theme.textTheme.labelLarge?.copyWith(
-          fontSize: 14,
-          color: AppliColors.white,
-          fontFamily: 'Metropolis',
-          fontWeight: FontWeight.w500,
-        ),
-        //black caption title
-        bodySmall: theme.textTheme.bodySmall?.copyWith(
-          fontSize: 34,
-          color: AppliColors.black,
-          fontFamily: 'Metropolis',
-          fontWeight: FontWeight.w700,
-        ),
-        //light gray small text
-        bodyLarge: theme.textTheme.bodyLarge?.copyWith(
-          color: AppliColors.lightGray,
-          fontSize: 15,
-          fontFamily: 'Metropolis',
-          fontWeight: FontWeight.w400,
-        ),
-        //view all link
-        bodyMedium: theme.textTheme.bodyMedium?.copyWith(
-          color: AppliColors.black,
-          fontSize: 11,
-          fontFamily: 'Metropolis',
-          fontWeight: FontWeight.w400,
-        ),
-      )
-          .apply(fontFamily: 'Metropolis'),
-      buttonTheme: theme.buttonTheme.copyWith(
-        minWidth: 50,
-        buttonColor: AppliColors.red,
-      ), bottomAppBarTheme: const BottomAppBarTheme(color: AppliColors.lightGray), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: AppliColors.main).copyWith(background: AppliColors.background).copyWith(error: AppliColors.red),
-    );
-  }
-}
+// class AppliTontineTheme {
+//   static ThemeData of(context) {
+//     final theme = Theme.of(context);
+//     return theme.copyWith(
+//       primaryColor: AppliColors.main,
+//       primaryColorLight: AppliColors.lightGray,
+//       dialogBackgroundColor: AppliColors.backgroundLight,
+//       dividerColor: Colors.transparent,
+//       appBarTheme: theme.appBarTheme.copyWith(
+//           color: AppliColors.white,
+//           iconTheme: const IconThemeData(color: AppliColors.black),
+//           toolbarTextStyle: theme.textTheme
+//               .copyWith(
+//               bodySmall: const TextStyle(
+//                 color: AppliColors.black,
+//                 fontSize: 18,
+//                 fontFamily: 'Metropolis',
+//                 fontWeight: FontWeight.w400,
+//               ))
+//               .bodyMedium,
+//           titleTextStyle: theme.textTheme
+//               .copyWith(
+//               bodySmall: const TextStyle(
+//                 color: AppliColors.black,
+//                 fontSize: 18,
+//                 fontFamily: 'Metropolis',
+//                 fontWeight: FontWeight.w400,
+//               ))
+//               .titleLarge),
+//       textTheme: theme.textTheme
+//           .copyWith(
+//         //over image white text
+//         headlineSmall: theme.textTheme.headlineSmall?.copyWith(
+//           fontSize: 48,
+//           color: AppliColors.white,
+//           fontFamily: 'Metropolis',
+//           fontWeight: FontWeight.w900,
+//         ),
+//         titleLarge: theme.textTheme.titleLarge?.copyWith(
+//           fontSize: 24,
+//           color: AppliColors.black,
+//           fontWeight: FontWeight.w900,
+//           fontFamily: 'Metropolis',
+//         ),
+//         //
+//
+//         //product title
+//         headlineMedium: theme.textTheme.headlineMedium?.copyWith(
+//           color: AppliColors.black,
+//           fontSize: 16,
+//           fontWeight: FontWeight.w400,
+//           fontFamily: 'Metropolis',
+//         ),
+//
+//         displaySmall: theme.textTheme.displaySmall?.copyWith(
+//           fontFamily: 'Metropolis',
+//           fontWeight: FontWeight.w400,
+//         ),
+//         //product price
+//         displayMedium: theme.textTheme.displayMedium?.copyWith(
+//           color: AppliColors.lightGray,
+//           fontSize: 14,
+//           fontFamily: 'Metropolis',
+//           fontWeight: FontWeight.w400,
+//         ),
+//         displayLarge: theme.textTheme.displayLarge?.copyWith(
+//           fontFamily: 'Metropolis',
+//           fontWeight: FontWeight.w500,
+//         ),
+//
+//         titleSmall: theme.textTheme.titleSmall?.copyWith(
+//           fontSize: 18,
+//           color: AppliColors.black,
+//           fontFamily: 'Metropolis',
+//           fontWeight: FontWeight.w400,
+//         ),
+//
+//         titleMedium: theme.textTheme.titleMedium?.copyWith(
+//           fontSize: 24,
+//           color: AppliColors.darkGray,
+//           fontFamily: 'Metropolis',
+//           fontWeight: FontWeight.w500,
+//         ),
+//         //red button with white text
+//         labelLarge: theme.textTheme.labelLarge?.copyWith(
+//           fontSize: 14,
+//           color: AppliColors.white,
+//           fontFamily: 'Metropolis',
+//           fontWeight: FontWeight.w500,
+//         ),
+//         //black caption title
+//         bodySmall: theme.textTheme.bodySmall?.copyWith(
+//           fontSize: 34,
+//           color: AppliColors.black,
+//           fontFamily: 'Metropolis',
+//           fontWeight: FontWeight.w700,
+//         ),
+//         //light gray small text
+//         bodyLarge: theme.textTheme.bodyLarge?.copyWith(
+//           color: AppliColors.lightGray,
+//           fontSize: 15,
+//           fontFamily: 'Metropolis',
+//           fontWeight: FontWeight.w400,
+//         ),
+//         //view all link
+//         bodyMedium: theme.textTheme.bodyMedium?.copyWith(
+//           color: AppliColors.black,
+//           fontSize: 11,
+//           fontFamily: 'Metropolis',
+//           fontWeight: FontWeight.w400,
+//         ),
+//       )
+//           .apply(fontFamily: 'Metropolis'),
+//       buttonTheme: theme.buttonTheme.copyWith(
+//         minWidth: 50,
+//         buttonColor: AppliColors.red,
+//       ), bottomAppBarTheme: const BottomAppBarTheme(color: AppliColors.lightGray), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: AppliColors.main).copyWith(background: AppliColors.background).copyWith(error: AppliColors.red),
+//     );
+//   }
+// }

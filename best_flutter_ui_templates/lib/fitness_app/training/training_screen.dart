@@ -14,8 +14,7 @@ class TrainingScreen extends StatefulWidget {
   _TrainingScreenState createState() => _TrainingScreenState();
 }
 
-class _TrainingScreenState extends State<TrainingScreen>
-    with TickerProviderStateMixin {
+class _TrainingScreenState extends State<TrainingScreen> with TickerProviderStateMixin {
   Animation<double>? topBarAnimation;
 
   List<Widget> listViews = <Widget>[];
@@ -24,10 +23,7 @@ class _TrainingScreenState extends State<TrainingScreen>
 
   @override
   void initState() {
-    topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-            parent: widget.animationController!,
-            curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
+    topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: widget.animationController!, curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
     addAllListData();
 
     scrollController.addListener(() {
@@ -37,8 +33,7 @@ class _TrainingScreenState extends State<TrainingScreen>
             topBarOpacity = 1.0;
           });
         }
-      } else if (scrollController.offset <= 24 &&
-          scrollController.offset >= 0) {
+      } else if (scrollController.offset <= 24 && scrollController.offset >= 0) {
         if (topBarOpacity != scrollController.offset / 24) {
           setState(() {
             topBarOpacity = scrollController.offset / 24;
@@ -62,29 +57,20 @@ class _TrainingScreenState extends State<TrainingScreen>
       TitleView(
         titleTxt: 'Your program',
         subTxt: 'Details',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: widget.animationController!, curve: Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
 
     listViews.add(
       WorkoutView(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: widget.animationController!, curve: Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
     listViews.add(
       RunningView(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: widget.animationController!, curve: Interval((1 / count) * 3, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
@@ -93,21 +79,14 @@ class _TrainingScreenState extends State<TrainingScreen>
       TitleView(
         titleTxt: 'Area of focus',
         subTxt: 'more',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn))),
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: widget.animationController!, curve: Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
 
     listViews.add(
       AreaListView(
-        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.animationController!,
-                curve: Interval((1 / count) * 5, 1.0,
-                    curve: Curves.fastOutSlowIn))),
+        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: widget.animationController!, curve: Interval((1 / count) * 5, 1.0, curve: Curves.fastOutSlowIn))),
         mainScreenAnimationController: widget.animationController!,
       ),
     );
@@ -147,9 +126,7 @@ class _TrainingScreenState extends State<TrainingScreen>
           return ListView.builder(
             controller: scrollController,
             padding: EdgeInsets.only(
-              top: AppBar().preferredSize.height +
-                  MediaQuery.of(context).padding.top +
-                  24,
+              top: AppBar().preferredSize.height + MediaQuery.of(context).padding.top + 24,
               bottom: 62 + MediaQuery.of(context).padding.bottom,
             ),
             itemCount: listViews.length,
@@ -173,8 +150,7 @@ class _TrainingScreenState extends State<TrainingScreen>
             return FadeTransition(
               opacity: topBarAnimation!,
               child: Transform(
-                transform: Matrix4.translationValues(
-                    0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
+                transform: Matrix4.translationValues(0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
                 child: Container(
                   decoration: BoxDecoration(
                     color: FitnessAppTheme.white.withOpacity(topBarOpacity),
@@ -182,11 +158,7 @@ class _TrainingScreenState extends State<TrainingScreen>
                       bottomLeft: Radius.circular(32.0),
                     ),
                     boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          color: FitnessAppTheme.grey
-                              .withOpacity(0.4 * topBarOpacity),
-                          offset: const Offset(1.1, 1.1),
-                          blurRadius: 10.0),
+                      BoxShadow(color: FitnessAppTheme.grey.withOpacity(0.4 * topBarOpacity), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
                     ],
                   ),
                   child: Column(
@@ -195,11 +167,7 @@ class _TrainingScreenState extends State<TrainingScreen>
                         height: MediaQuery.of(context).padding.top,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
-                            left: 16,
-                            right: 16,
-                            top: 16 - 8.0 * topBarOpacity,
-                            bottom: 12 - 8.0 * topBarOpacity),
+                        padding: EdgeInsets.only(left: 16, right: 16, top: 16 - 8.0 * topBarOpacity, bottom: 12 - 8.0 * topBarOpacity),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -224,8 +192,7 @@ class _TrainingScreenState extends State<TrainingScreen>
                               width: 38,
                               child: InkWell(
                                 highlightColor: Colors.transparent,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(32.0)),
+                                borderRadius: const BorderRadius.all(Radius.circular(32.0)),
                                 onTap: () {},
                                 child: Center(
                                   child: Icon(
@@ -269,8 +236,7 @@ class _TrainingScreenState extends State<TrainingScreen>
                               width: 38,
                               child: InkWell(
                                 highlightColor: Colors.transparent,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(32.0)),
+                                borderRadius: const BorderRadius.all(Radius.circular(32.0)),
                                 onTap: () {},
                                 child: Center(
                                   child: Icon(

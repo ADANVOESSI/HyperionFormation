@@ -1,16 +1,17 @@
 import 'dart:math' as math;
+
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/models/tabIcon_data.dart';
 import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 
-import '../../main.dart';
-import '../models/tabIcon_data.dart';
-
 class BottomBarView extends StatefulWidget {
-  const BottomBarView(
-      {Key? key, this.tabIconsList, this.changeIndex, this.addClick})
-      : super(key: key);
+  const BottomBarView({
+    Key? key,
+    this.tabIconsList,
+    this.changeIndex,
+    this.addClick,
+  }) : super(key: key);
 
   final Function(int index)? changeIndex;
   final Function()? addClick;
@@ -19,8 +20,7 @@ class BottomBarView extends StatefulWidget {
   _BottomBarViewState createState() => _BottomBarViewState();
 }
 
-class _BottomBarViewState extends State<BottomBarView>
-    with TickerProviderStateMixin {
+class _BottomBarViewState extends State<BottomBarView> with TickerProviderStateMixin {
   AnimationController? animationController;
 
   @override
@@ -48,9 +48,12 @@ class _BottomBarViewState extends State<BottomBarView>
                 elevation: 16.0,
                 clipper: TabClipper(
                     radius: Tween<double>(begin: 0.0, end: 1.0)
-                            .animate(CurvedAnimation(
+                            .animate(
+                              CurvedAnimation(
                                 parent: animationController!,
-                                curve: Curves.fastOutSlowIn))
+                                curve: Curves.fastOutSlowIn,
+                              ),
+                            )
                             .value *
                         38.0),
                 child: Column(
@@ -58,16 +61,14 @@ class _BottomBarViewState extends State<BottomBarView>
                     SizedBox(
                       height: 62,
                       child: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 8, right: 8, top: 4),
+                        padding: const EdgeInsets.only(left: 8, right: 8, top: 4),
                         child: Row(
                           children: <Widget>[
                             Expanded(
                               child: TabIcons(
                                   tabIconData: widget.tabIconsList?[0],
                                   removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[0]);
+                                    setRemoveAllSelection(widget.tabIconsList?[0]);
                                     widget.changeIndex!(0);
                                   }),
                             ),
@@ -75,16 +76,18 @@ class _BottomBarViewState extends State<BottomBarView>
                               child: TabIcons(
                                   tabIconData: widget.tabIconsList?[1],
                                   removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[1]);
+                                    setRemoveAllSelection(widget.tabIconsList?[1]);
                                     widget.changeIndex!(1);
                                   }),
                             ),
                             SizedBox(
                               width: Tween<double>(begin: 0.0, end: 1.0)
-                                      .animate(CurvedAnimation(
+                                      .animate(
+                                        CurvedAnimation(
                                           parent: animationController!,
-                                          curve: Curves.fastOutSlowIn))
+                                          curve: Curves.fastOutSlowIn,
+                                        ),
+                                      )
                                       .value *
                                   64.0,
                             ),
@@ -92,8 +95,7 @@ class _BottomBarViewState extends State<BottomBarView>
                               child: TabIcons(
                                   tabIconData: widget.tabIconsList?[2],
                                   removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[2]);
+                                    setRemoveAllSelection(widget.tabIconsList?[2]);
                                     widget.changeIndex!(2);
                                   }),
                             ),
@@ -101,8 +103,7 @@ class _BottomBarViewState extends State<BottomBarView>
                               child: TabIcons(
                                   tabIconData: widget.tabIconsList?[3],
                                   removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[3]);
+                                    setRemoveAllSelection(widget.tabIconsList?[3]);
                                     widget.changeIndex!(3);
                                   }),
                             ),
@@ -120,8 +121,7 @@ class _BottomBarViewState extends State<BottomBarView>
           },
         ),
         Padding(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
           child: SizedBox(
             width: 38 * 2.0,
             height: 38 + 62.0,
@@ -136,27 +136,26 @@ class _BottomBarViewState extends State<BottomBarView>
                   child: ScaleTransition(
                     alignment: Alignment.center,
                     scale: Tween<double>(begin: 0.0, end: 1.0).animate(
-                        CurvedAnimation(
-                            parent: animationController!,
-                            curve: Curves.fastOutSlowIn)),
+                      CurvedAnimation(
+                        parent: animationController!,
+                        curve: Curves.fastOutSlowIn,
+                      ),
+                    ),
                     child: Container(
                       // alignment: Alignment.center,s
                       decoration: BoxDecoration(
                         color: FitnessAppTheme.nearlyDarkBlue,
-                        gradient: LinearGradient(
-                            colors: [
-                              FitnessAppTheme.nearlyDarkBlue,
-                              HexColor('#6A88E5'),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
+                        gradient: LinearGradient(colors: [
+                          FitnessAppTheme.nearlyDarkBlue,
+                          HexColor('#6A88E5'),
+                        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                         shape: BoxShape.circle,
                         boxShadow: <BoxShadow>[
                           BoxShadow(
-                              color: FitnessAppTheme.nearlyDarkBlue
-                                  .withOpacity(0.4),
-                              offset: const Offset(8.0, 16.0),
-                              blurRadius: 16.0),
+                            color: FitnessAppTheme.nearlyDarkBlue.withOpacity(0.4),
+                            offset: const Offset(8.0, 16.0),
+                            blurRadius: 16.0,
+                          ),
                         ],
                       ),
                       child: Material(
@@ -198,8 +197,7 @@ class _BottomBarViewState extends State<BottomBarView>
 }
 
 class TabIcons extends StatefulWidget {
-  const TabIcons({Key? key, this.tabIconData, this.removeAllSelect})
-      : super(key: key);
+  const TabIcons({Key? key, this.tabIconData, this.removeAllSelect}) : super(key: key);
 
   final TabIconData? tabIconData;
   final Function()? removeAllSelect;
@@ -249,13 +247,18 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                 ScaleTransition(
                   alignment: Alignment.center,
                   scale: Tween<double>(begin: 0.88, end: 1.0).animate(
-                      CurvedAnimation(
-                          parent: widget.tabIconData!.animationController!,
-                          curve:
-                              Interval(0.1, 1.0, curve: Curves.fastOutSlowIn))),
-                  child: Image.asset(widget.tabIconData!.isSelected
-                      ? widget.tabIconData!.selectedImagePath
-                      : widget.tabIconData!.imagePath),
+                    CurvedAnimation(
+                      parent: widget.tabIconData!.animationController!,
+                      curve: Interval(
+                        0.1,
+                        1.0,
+                        curve: Curves.fastOutSlowIn,
+                      ),
+                    ),
+                  ),
+                  child: Image.asset(
+                    widget.tabIconData!.isSelected ? widget.tabIconData!.selectedImagePath : widget.tabIconData!.imagePath,
+                  ),
                 ),
                 Positioned(
                   top: 4,
@@ -264,10 +267,15 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                   child: ScaleTransition(
                     alignment: Alignment.center,
                     scale: Tween<double>(begin: 0.0, end: 1.0).animate(
-                        CurvedAnimation(
-                            parent: widget.tabIconData!.animationController!,
-                            curve: Interval(0.2, 1.0,
-                                curve: Curves.fastOutSlowIn))),
+                      CurvedAnimation(
+                        parent: widget.tabIconData!.animationController!,
+                        curve: Interval(
+                          0.2,
+                          1.0,
+                          curve: Curves.fastOutSlowIn,
+                        ),
+                      ),
+                    ),
                     child: Container(
                       width: 8,
                       height: 8,
@@ -285,10 +293,15 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                   child: ScaleTransition(
                     alignment: Alignment.center,
                     scale: Tween<double>(begin: 0.0, end: 1.0).animate(
-                        CurvedAnimation(
-                            parent: widget.tabIconData!.animationController!,
-                            curve: Interval(0.5, 0.8,
-                                curve: Curves.fastOutSlowIn))),
+                      CurvedAnimation(
+                        parent: widget.tabIconData!.animationController!,
+                        curve: Interval(
+                          0.5,
+                          0.8,
+                          curve: Curves.fastOutSlowIn,
+                        ),
+                      ),
+                    ),
                     child: Container(
                       width: 4,
                       height: 4,
@@ -306,10 +319,15 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                   child: ScaleTransition(
                     alignment: Alignment.center,
                     scale: Tween<double>(begin: 0.0, end: 1.0).animate(
-                        CurvedAnimation(
-                            parent: widget.tabIconData!.animationController!,
-                            curve: Interval(0.5, 0.6,
-                                curve: Curves.fastOutSlowIn))),
+                      CurvedAnimation(
+                        parent: widget.tabIconData!.animationController!,
+                        curve: Interval(
+                          0.5,
+                          0.6,
+                          curve: Curves.fastOutSlowIn,
+                        ),
+                      ),
+                    ),
                     child: Container(
                       width: 6,
                       height: 6,
@@ -340,26 +358,38 @@ class TabClipper extends CustomClipper<Path> {
 
     final double v = radius * 2;
     path.lineTo(0, 0);
-    path.arcTo(Rect.fromLTWH(0, 0, radius, radius), degreeToRadians(180),
-        degreeToRadians(90), false);
     path.arcTo(
-        Rect.fromLTWH(
-            ((size.width / 2) - v / 2) - radius + v * 0.04, 0, radius, radius),
-        degreeToRadians(270),
-        degreeToRadians(70),
-        false);
-
-    path.arcTo(Rect.fromLTWH((size.width / 2) - v / 2, -v / 2, v, v),
-        degreeToRadians(160), degreeToRadians(-140), false);
+      Rect.fromLTWH(0, 0, radius, radius),
+      degreeToRadians(180),
+      degreeToRadians(90),
+      false,
+    );
+    path.arcTo(
+      Rect.fromLTWH(((size.width / 2) - v / 2) - radius + v * 0.04, 0, radius, radius),
+      degreeToRadians(270),
+      degreeToRadians(70),
+      false,
+    );
 
     path.arcTo(
-        Rect.fromLTWH((size.width - ((size.width / 2) - v / 2)) - v * 0.04, 0,
-            radius, radius),
-        degreeToRadians(200),
-        degreeToRadians(70),
-        false);
-    path.arcTo(Rect.fromLTWH(size.width - radius, 0, radius, radius),
-        degreeToRadians(270), degreeToRadians(90), false);
+      Rect.fromLTWH((size.width / 2) - v / 2, -v / 2, v, v),
+      degreeToRadians(160),
+      degreeToRadians(-140),
+      false,
+    );
+
+    path.arcTo(
+      Rect.fromLTWH((size.width - ((size.width / 2) - v / 2)) - v * 0.04, 0, radius, radius),
+      degreeToRadians(200),
+      degreeToRadians(70),
+      false,
+    );
+    path.arcTo(
+      Rect.fromLTWH(size.width - radius, 0, radius, radius),
+      degreeToRadians(270),
+      degreeToRadians(90),
+      false,
+    );
     path.lineTo(size.width, 0);
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
