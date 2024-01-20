@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "778589993850",
+    "project_id": "transfertappli",
+    "storage_bucket": "transfertappli.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778589993850:android:4a62261019cb382130f4c3",
+        "android_client_info": {
+          "package_name": "com.example.transfert_tontine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlqrLL-ng4F00npQkl37X9HsQZfbUZH38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
